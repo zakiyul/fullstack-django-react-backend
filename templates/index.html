@@ -1,0 +1,94 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-3">
+  <h2>Chefs</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Umur</th>
+        <th scope="col">Jenis Kelamin</th>
+        <th scope="col">Show</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for chef in chefs %}
+      <tr>
+        <th scope="row">{{chef.id}}</th>
+        <td>{{chef.nama}}</td>
+        <td>{{chef.umur}} Tahun</td>
+        {% if chef.gender == 'lk' %}
+        <td>Laki-laki</td>
+        {% else %}
+        <td>Perempuan</td>
+        {% endif %}
+        <td>
+          {% if chef.show %}
+          <span class="badge rounded-pill bg-warning">Active</span>
+          {% else %}
+          <span class="badge rounded-pill bg-danger">Inactive</span>
+          {% endif %}
+        </td>
+        <td>
+          <img src="{{chef.foto.url}}" alt="{{chef.nama}}" width="100px" />
+        </td>
+        <td>
+          <div class="d-flex">
+            <a href="/edit-chef/{{chef.id}}" class="btn btn-primary me-2"
+              >Edit</a
+            >
+            <a href="/delete/{{chef.id}}" class="btn btn-danger">Delete</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h2 class="mt-3">Foods</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Harga</th>
+        <th scope="col">Chef</th>
+        <th scope="col">Gambar</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for food in foods %}
+      <tr>
+        <th scope="row">{{food.id}}</th>
+        <td>{{food.nama}}</td>
+        <td>Rp. {{food.harga}}</td>
+        <td>
+          <img
+            src="{{food.chef.foto.url}}"
+            alt="{{food.chef.nama}}"
+            width="100px"
+          />
+        </td>
+        <td>
+          <img src="{{food.gambar.url}}" alt="{{food.nama}}" width="100px" />
+        </td>
+        <td>
+          <div class="d-flex">
+            <a
+              href="/edit-chef/{{chef.id}}"
+              class="disabled btn btn-primary me-2"
+              >Edit</a
+            >
+            <a href="/delete/{{chef.id}}" class="disabled btn btn-danger"
+              >Delete</a
+            >
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h1>{{action}} Form</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="nama" class="form-label">Nama</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nama"
+          name="nama"
+          value="{{food.nama}}"
+        />
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="harga" class="form-label">Harga</label>
+        <input
+          type="number"
+          class="form-control"
+          id="harga"
+          name="harga"
+          value="{{food.umur}}"
+        />
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="chef" class="form-label">Chef</label>
+        <select name="chef" id="chef" class="form-select">
+          <option>--pilih--</option>
+          {% for chef in chefs %}
+            <option value="{{chef.id}}">{{chef.nama}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="foto" class="form-label">Foto</label>
+        <input type="file" class="form-control" id="foto" name="foto" />
+        {% if action == 'Edit' %}
+        <small>Foto: <a href="/media/{{food.foto}}">{{food.foto}}</a></small>
+        {% endif %}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">{{action}}</button>
+  </form>
+</div>
+{% endblock content %}

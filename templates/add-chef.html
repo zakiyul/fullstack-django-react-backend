@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h1>{{action}} Form</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="nama" class="form-label">Nama</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nama"
+          name="nama"
+          value="{{chef.nama}}"
+        />
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="umur" class="form-label">Umur</label>
+        <input
+          type="number"
+          class="form-control"
+          id="umur"
+          name="umur"
+          value="{{chef.umur}}"
+        />
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="gender" class="form-label">Gender</label>
+        <select class="form-select" name="gender" id="gender">
+        {% if chef.gender == 'pr' %}
+          <option value="lk">Laki-laki</option>
+          <option selected value="pr">Perempuan</option>
+          {% else %}
+          <option selected value="lk">Laki-laki</option>
+          <option value="pr">Perempuan</option>
+        {% endif %}
+        </select>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="foto" class="form-label">Foto</label>
+        <input type="file" class="form-control" id="foto" name="foto" />
+        {% if action == 'Edit' %}
+        <small>Foto: <a href="/media/{{chef.foto}}">{{chef.foto}}</a></small>
+        {% endif %}
+      </div>
+    </div>
+    <div class="mb-3 form-check">
+      {% if chef.show %}
+      <input
+        type="checkbox"
+        checked
+        name="show"
+        id="show"
+        class="form-check-input"
+      />
+      <label for="show" class="form-label">Show</label>
+      {% else %}
+      <input type="checkbox" name="show" id="show" class="form-check-input" />
+      <label for="show" class="form-label">Show</label>
+      {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">{{action}}</button>
+  </form>
+</div>
+{% endblock content %}
